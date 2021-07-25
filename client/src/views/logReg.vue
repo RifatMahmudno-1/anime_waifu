@@ -33,7 +33,7 @@
 		},
 		methods: {
 			checkData() {
-				fetch(`http://localhost:5000/api/log_reg`, {
+				fetch(`/api/log_reg`, {
 					method: this.site == '/login' ? 'POST' : 'PUT',
 					headers: { 'content-type': 'application/json' },
 					body: JSON.stringify({ encData: this.$crypt.enc(JSON.stringify({ name: this.name, email: this.email, pass: this.pass })) })
