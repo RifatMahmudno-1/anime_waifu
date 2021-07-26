@@ -39,14 +39,15 @@
 </script>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Signika&display=swap');
 	* {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
 	}
 	body {
+		font-family: 'Signika', sans-serif;
 		font-size: 20px;
-		font-family: 'Signika';
 		color: #fff;
 		user-select: none;
 		overscroll-behavior-y: none;

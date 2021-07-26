@@ -69,8 +69,8 @@
 					body: form
 				})
 					.then(r => {
-						if (r.status === 403) this.$emit('errMsg', 'Some errors have occured. Please try again.')
-						if (r.status === 500) this.$emit('errMsg', 'Server Error Occured. Please try again')
+						if (r.status === 403) this.$emit('errMsg', 'Some errors have occured. Please try again.') && this.cancelUp()
+						if (r.status === 500) this.$emit('errMsg', 'Server Error Occured. Please try again') && this.cancelUp()
 						if (r.status === 401) this.$emit('errMsg', "You aren't logged in. Please login now.") && this.$router.push('/login')
 						else return r.json()
 					})
@@ -80,7 +80,7 @@
 						this.char.img = r.main
 						this.oldImg = this.char.img
 					})
-					.catch(() => this.$emit('errMsg', 'Some errors have occured. Please try again.'))
+					.catch(() => this.$emit('errMsg', 'Some errors have occured. Please try again.') && this.cancelUp())
 			}
 		}
 	}
