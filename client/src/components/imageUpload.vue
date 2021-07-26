@@ -77,7 +77,7 @@
 							this.$emit('errMsg', 'Server Error Occured. Please try again')
 							this.cancelUp()
 						}
-						if (r.status === r.status) {
+						if (r.status === 401) {
 							this.$emit('errMsg', "You aren't logged in. Please login now.")
 							this.$router.push('/login')
 						} else return r.json()
