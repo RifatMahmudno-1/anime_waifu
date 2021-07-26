@@ -34,7 +34,7 @@
 			changeImg(e) {},
 			mylist() {
 				this.loaded = false
-				fetch('/api/getlist', {
+				fetch(`${this.$API}/api/getlist`, {
 					method: 'POST',
 					headers: {
 						'content-type': 'application/json'
