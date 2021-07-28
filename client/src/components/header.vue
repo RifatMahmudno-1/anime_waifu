@@ -3,9 +3,9 @@
 		<router-link to="/"><h3>Anime Waifu</h3></router-link>
 		<input type="search" v-model="query" @keypress="e => (e.keyCode == 13 ? search() : 'null')" placeholder="Type name to search" />
 		<select ref="sel" @change="typeCng">
-			<option value="q">Single</option>
-			<option value="ani">Anime</option>
-			<option value="man">Manga</option>
+			<option value="q">by Name</option>
+			<option value="ani">by Anime</option>
+			<option value="man">by Manga</option>
 		</select>
 		<button @click="search">Search</button>
 	</header>

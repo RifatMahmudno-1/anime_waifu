@@ -3,11 +3,11 @@
 		<img :src="char.img" draggable="false" />
 		<div v-if="char.birth" class="birth">{{ formDate(char.birth) }}</div>
 		<div class="add" v-if="srch && char.added">
-			<span v-if="char.added == 'notAdded'">Click to add</span>
-			<span v-else>Click to Remove</span>
+			<span>{{ char.added == 'notAdded' ? 'Click to add' : 'Click to remove' }}</span>
 			<img src="@/assets/heart_solid.svg" />
+			<span class="cover"></span>
 		</div>
-		<a :srch="srch ? 'true' : 'false'" :href="char.siteUrl" class="name" target="_blank">{{ char.name }}</a>
+		<div :srch="srch ? 'true' : 'false'" class="name">{{ char.name }}</div>
 	</div>
 </template>
 <script>
@@ -28,6 +28,14 @@
 	}
 </script>
 <style scoped>
+	.cover {
+		position: absolute;
+		z-index: 2;
+		height: 100%;
+		width: 100%;
+		cursor: pointer;
+	}
+
 	.each[srch='false']::before {
 		counter-increment: each;
 		content: counter(each);
@@ -109,6 +117,12 @@
 		box-shadow: 0 1px 5px pink;
 		transition: box-shadow 0.2s;
 		bottom: 1rem;
+		width: fit-content;
+		max-width: 10rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		cursor: pointer;
 	}
 	.name[srch='true'] {
 		bottom: 3rem;

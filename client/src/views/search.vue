@@ -7,9 +7,11 @@
 			<div class="ani">Data Provided by <a :href="chars[view].siteUrl">Anilist</a></div>
 		</div>
 		<loading v-if="!loaded" />
-		<section v-else class="container" ref="container" @click="detail">
-			<eachCard v-for="(char, ind) in chars" :key="ind" :char="char" :srch="true" />
+		<section v-else-if="loaded && chars.length > 0" class="container" ref="container" @click="detail">
+			<EachCard v-for="(char, ind) in chars" :key="ind" :char="char" :srch="true" />
+			<div v-if="page.hasNextPage" class="more" @click="!page.loading ? getWaifu(type, query, page.currentPage + 1, true) : null">{{ page.loading ? 'loading...' : 'Show more Results' }}</div>
 		</section>
+		<Error v-else />
 		<Footer />
 	</main>
 </template>
@@ -23,16 +25,18 @@
 				dtl: false,
 				tOut: undefined,
 				view: undefined,
-				loaded: false
+				loaded: false,
+				page: {}
 			}
 		},
 		methods: {
-			getWaifu(type, name) {
+			getWaifu(type, name, page, add) {
+				if (add) this.page.loading = true
 				fetch(`${this.$API}/api/search`, {
 					method: 'POST',
 					headers: { 'content-type': 'application/json' },
 					body: JSON.stringify({
-						encData: this.$crypt.enc(JSON.stringify({ type: type, name: name, email: this.$cookie.get('email') })),
+						encData: this.$crypt.enc(JSON.stringify({ type: type, name: name, email: this.$cookie.get('email'), page: page || 1 })),
 						email: this.$cookie.get('email'),
 						token: this.$cookie.get('token')
 					})
@@ -44,11 +48,25 @@
 						else return r.json()
 					})
 					.then(r => {
-						this.loaded = true
-						if (r.encData) this.chars = JSON.parse(this.$crypt.dec(r.encData))
-						else this.chars = []
+						if (!add) {
+							this.loaded = true
+							if (r.encData) {
+								let d = JSON.parse(this.$crypt.dec(r.encData))
+								this.chars = d.data
+								this.page = d.page
+							} else this.chars = []
+						} else {
+							if (r.encData) {
+								let d = JSON.parse(this.$crypt.dec(r.encData))
+								this.chars.push(...d.data)
+								this.page = d.page
+							} else this.page = {}
+						}
 					})
-					.catch(() => (this.chars = []))
+					.catch(() => {
+						this.$emit('errMsg', 'Some errors have occured.')
+						if (add) this.chars = []
+					})
 			},
 			detail(e) {
 				if (this.dtl && !this.tOut) {
@@ -58,20 +76,25 @@
 						this.view = undefined
 						this.tOut = undefined
 					}, 500)
-				} else if (!this.dtl && !this.tOut) {
-					let path = e.path || e.composedPath()
-					if (!path) return false
-					let ele = path?.find(el => el.classList?.contains('each'))
-					let add = path?.find(el => el.classList?.contains('add'))
-					if (!ele) return false
-					if (add) {
-						let ind = Array.from(this.$refs.container.children).indexOf(ele)
-						if (ind >= 0) this.addRemList(ind)
-					} else {
-						this.view = Array.from(this.$refs.container.children).indexOf(ele)
-						if (this.chars[this.view].description == '') this.$emit('errMsg', 'No Description Provided')
-						else this.dtl = true
-					}
+					return false
+				}
+				let addRem,
+					dtl,
+					path = e.path || e.composedPath()
+				if (e.target.classList.contains('cover')) addRem = path.find(el => el.classList?.contains('each'))
+				if (e.target.classList.contains('name')) dtl = path.find(el => el.classList?.contains('each'))
+				if (!addRem && !dtl) return false
+				let ind = Array.from(this.$refs.container.children).indexOf(dtl || addRem)
+				if (ind < 0) return false
+				if (dtl) {
+					this.view = ind
+					if (this.chars[this.view].description == '') this.$emit('errMsg', 'No Description Provided')
+					else this.dtl = true
+					return false
+				}
+				if (addRem) {
+					this.addRemList(ind)
+					return false
 				}
 			},
 			addRemList(ind) {
@@ -103,6 +126,7 @@
 						if (r.status == 'added') this.chars[ind].added = 'added'
 						if (r.status == 'removed') this.chars[ind].added = 'notAdded'
 					})
+					.catch(() => this.$emit('Some errors have occured. Please try again.'))
 			},
 			newData() {
 				this.chars = []
@@ -110,6 +134,7 @@
 				this.tOut = undefined
 				this.view = undefined
 				this.loaded = false
+				this.page = {}
 				this.getWaifu(this.type, this.query)
 			}
 		},
@@ -128,6 +153,19 @@
 	}
 </script>
 <style scoped>
+	.more {
+		grid-column: 1/-1;
+		text-align: center;
+		background: rgba(255, 255, 255, 0.2);
+		border-radius: 0.5rem;
+		padding: 0.5rem;
+		cursor: pointer;
+		box-shadow: 0 2px 4px #fff;
+		transition: 0.5s box-shadow;
+	}
+	.more:hover {
+		box-shadow: 0 5px 10px #fff;
+	}
 	.dtl {
 		position: fixed;
 		width: 80vmin;
