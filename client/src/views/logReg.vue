@@ -33,6 +33,7 @@
 		},
 		methods: {
 			checkData() {
+				this.$emit('errMsg', 'Please wait while we check your data.', true)
 				fetch(`${this.$API}/api/log_reg`, {
 					method: this.site == '/login' ? 'POST' : 'PUT',
 					headers: { 'content-type': 'application/json' },
