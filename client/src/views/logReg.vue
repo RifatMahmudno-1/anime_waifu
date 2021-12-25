@@ -34,7 +34,7 @@
 		methods: {
 			checkData() {
 				this.$emit('errMsg', 'Please wait while we check your data.', true)
-				fetch(`${this.$API}/api/log_reg`, {
+				fetch(`${this.$API}/log_reg`, {
 					method: this.site == '/login' ? 'POST' : 'PUT',
 					headers: { 'content-type': 'application/json' },
 					body: JSON.stringify({ encData: this.$crypt.enc(JSON.stringify({ name: this.name, email: this.email, pass: this.pass })) })

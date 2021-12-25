@@ -34,7 +34,7 @@
 		methods: {
 			mylist() {
 				this.loaded = false
-				fetch(`${this.$API}/api/getlist`, {
+				fetch(`${this.$API}/getlist`, {
 					method: 'POST',
 					headers: {
 						'content-type': 'application/json'
@@ -76,7 +76,7 @@
 			},
 			remove(ind) {
 				if (confirm("This character will be removed from your list. It's modifications will also be removed.")) {
-					fetch(`${this.$API}/api/editList`, {
+					fetch(`${this.$API}/editList`, {
 						method: 'DELETE',
 						headers: {
 							'content-type': 'application/json'
