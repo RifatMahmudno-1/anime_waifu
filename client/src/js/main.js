@@ -3,9 +3,6 @@ import router from './router'
 import App from '../App.vue'
 import cookieParser from './cookieParse'
 import crypto from './cryptoSetup'
+import changeApi from './changeApi'
 
-function API(app) {
-	app.config.globalProperties.$API = import.meta.env.VITE_API
-}
-
-createApp(App).use(router).use(cookieParser).use(crypto).use(API).mount('#app')
+createApp(App).use(router).use(cookieParser).use(changeApi).use(crypto).mount('#app')

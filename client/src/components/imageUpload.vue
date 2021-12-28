@@ -64,7 +64,7 @@
 				form.append('email', this.$cookie.get('email'))
 				form.append('token', this.$cookie.get('token'))
 				form.append('id', this.char.id)
-				fetch(`${this.$API}/imgUp`, {
+				fetch(`${this.$api()}/imgUp`, {
 					method: 'PUT',
 					body: form
 				})

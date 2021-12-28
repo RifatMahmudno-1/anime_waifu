@@ -32,7 +32,7 @@
 		methods: {
 			getWaifu(type, name, page, add) {
 				if (add) this.page.loading = true
-				fetch(`${this.$API}/search`, {
+				fetch(`${this.$api()}/search`, {
 					method: 'POST',
 					headers: { 'content-type': 'application/json' },
 					body: JSON.stringify({
@@ -100,7 +100,7 @@
 			addRemList(ind) {
 				let stat = this.chars[ind].added == 'added' ? true : false
 				delete this.chars[ind].added
-				fetch(`${this.$API}/editList`, {
+				fetch(`${this.$api()}/editList`, {
 					method: stat ? 'DELETE' : 'PUT',
 					headers: {
 						'content-type': 'application/json'
