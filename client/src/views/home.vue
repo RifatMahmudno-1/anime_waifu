@@ -9,10 +9,13 @@
 			<div class="ani">Data Provided by <a :href="chars[view].siteUrl">Anilist</a></div>
 		</div>
 		<loading v-if="!loaded" />
-		<section v-else @click="detail" class="container" ref="container">
-			<eachCard v-for="(char, ind) in chars" :key="ind" :char="char" />
-			<h3 v-if="chars.length == 0">You haven't added anyone.<br />Search by name or by anime or by manga and add to your list.</h3>
+		<section v-else class="back">
+			<div @click="detail" class="container" ref="container">
+				<eachCard v-for="(char, ind) in chars" :key="ind" :char="char" />
+				<h3 v-if="chars.length == 0">You haven't added anyone.<br />Search by name or by anime or by manga and add to your list.</h3>
+			</div>
 		</section>
+
 		<Footer />
 	</main>
 </template>
@@ -156,12 +159,16 @@
 	.container {
 		width: 100%;
 		display: grid;
-		grid-template-columns: repeat(auto-fit, 12rem);
+		grid-template-columns: repeat(auto-fit, 200px);
 		padding: 6rem 4rem;
 		grid-gap: 5rem;
 		justify-content: center;
 		counter-reset: each;
-		background-image: linear-gradient(rgba(240, 2, 127, 0.6), rgba(240, 2, 127, 0.6)), url('https://waifu-chan.netlify.app/img/wallpaper.jpg');
+	}
+	.back {
+		width: 100%;
+		height: 100%;
+		background-image: linear-gradient(rgba(240, 2, 127, 0.6), rgba(240, 2, 127, 0.6)), url('@/assets/wallpaper.jpg');
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -234,6 +241,52 @@
 		}
 		100% {
 			transform: translate(calc((100vw - 100%) / 2), -100vh);
+		}
+	}
+
+	@media only screen and (max-width: 1500px) {
+		.container {
+			grid-template-columns: repeat(auto-fit, 180px);
+			padding: 3rem 2rem;
+		}
+	}
+	@media only screen and (max-width: 1110px) {
+		.container {
+			grid-template-columns: repeat(auto-fit, 150px);
+			padding: 3rem 2rem;
+		}
+	}
+	@media only screen and (max-width: 950px) {
+		.container {
+			grid-template-columns: repeat(auto-fit, 135px);
+			padding: 3rem 2rem;
+			grid-gap: 3.5rem;
+		}
+	}
+	@media only screen and (max-width: 600px) {
+		.container {
+			grid-template-columns: repeat(auto-fit, 115px);
+		}
+	}
+	@media only screen and (max-width: 540px) {
+		.container {
+			padding: 2rem 2rem;
+			grid-gap: 2.5rem;
+		}
+	}
+	@media only screen and (max-width: 490px) {
+		.container {
+			grid-template-columns: repeat(auto-fit, 100px);
+		}
+	}
+	@media only screen and (max-width: 445px) {
+		.container {
+			grid-template-columns: repeat(auto-fit, 80px);
+		}
+	}
+	@media only screen and (max-width: 390px) {
+		.container {
+			grid-template-columns: repeat(auto-fit, 70px);
 		}
 	}
 </style>

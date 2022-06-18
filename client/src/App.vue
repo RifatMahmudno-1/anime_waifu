@@ -65,6 +65,21 @@
 		text-decoration: none;
 		color: inherit;
 	}
+	@media only screen and (max-width: 800px) {
+		body {
+			font-size: 16px;
+		}
+	}
+	@media only screen and (max-width: 650px) {
+		body {
+			font-size: 14px;
+		}
+	}
+	@media only screen and (max-width: 360px) {
+		body {
+			font-size: 12px;
+		}
+	}
 </style>
 <style scoped>
 	.dis_err {
@@ -86,7 +101,6 @@
 		padding: 0.2rem 0.5rem;
 		border-radius: 0.2rem;
 	}
-
 	@keyframes errani {
 		5% {
 			transform: translateY(0);

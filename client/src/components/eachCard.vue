@@ -159,4 +159,67 @@
 		filter: invert(1);
 		padding: 0.1rem;
 	}
+	@media only screen and (max-width: 1350px) {
+		.birth {
+			right: -1.8rem;
+		}
+	}
+	@media only screen and (max-width: 1110px) {
+		.name,
+		.add {
+			right: 0.5rem;
+			max-width: 7rem;
+		}
+		.each > img {
+			border: 3px solid rgb(240, 2, 127);
+			border-radius: 0.7rem;
+		}
+	}
+	@media only screen and (max-width: 800px) {
+		.birth {
+			top: 4rem;
+			right: -1.5rem;
+		}
+		.birth::before {
+			top: -1.8rem;
+			height: 0.7rem;
+			width: 0.7rem;
+		}
+		.name,
+		.add {
+			max-width: 6rem;
+		}
+	}
+	@media only screen and (max-width: 490px) {
+		.name,
+		.add {
+			max-width: 5rem;
+		}
+		.each[srch='false']::before {
+			height: 1.3rem;
+			width: 1.3rem;
+		}
+	}
+	@media only screen and (max-width: 450px) {
+		.name,
+		.add {
+			font-size: 50%;
+			max-width: 4rem;
+		}
+	}
+	@media only screen and (max-width: 390px) {
+		.each > img {
+			border: 2px solid rgb(240, 2, 127);
+			border-radius: 0.5rem;
+		}
+		.birth {
+			top: 2rem;
+			right: -1.5rem;
+		}
+		.name,
+		.add {
+			font-size: 40%;
+			max-width: 3rem;
+		}
+	}
 </style>

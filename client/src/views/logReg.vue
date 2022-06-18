@@ -94,7 +94,8 @@
 		padding: 2rem 1rem;
 		display: grid;
 		grid-template-columns: 0.8fr 1.2fr;
-		width: 100%;
+		width: 90%;
+		margin: 0 auto;
 		max-width: 800px;
 		align-items: center;
 		gap: 2rem;
@@ -126,7 +127,7 @@
 		margin: 0.5rem 0;
 		color: #fff;
 		transition: background 0.2s;
-		font-size: 1.5rem;
+		font-size: 120%;
 	}
 	button:hover {
 		background-position: right;
@@ -149,5 +150,20 @@
 	label {
 		margin-bottom: 0.1rem;
 		padding-left: 0.5rem;
+	}
+	@media only screen and (max-width: 600px) {
+		form {
+			padding: 1.2rem;
+			gap: 1rem;
+		}
+	}
+	@media only screen and (max-width: 450px) {
+		form {
+			grid-template-columns: 1fr;
+		}
+		img {
+			width: 50vw;
+			margin: 0 auto;
+		}
 	}
 </style>
